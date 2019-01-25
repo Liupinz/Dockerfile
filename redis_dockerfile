@@ -16,12 +16,13 @@ RUN \
   make install && \
   mkdir /etc/redis && \
   mkdir /data && \
+  
   cp /usr/local/redis/redis.conf  /etc/redis/redis.conf && \
   rm -rf /tmp/redis-* && \
   sed -i "s/^\(bind .*\)$/bind $addr/g" /etc/redis/redis.conf && \
   sed -i 's/daemonize no/daemonize yes/g' /etc/redis/redis.conf && \
   sed -i 's/^\(dir .*\)$/dir \/var\/lib\/redis/g' /etc/redis/redis.conf && \
-  sed -i 's/^\(logfile .*\)$/logfile \/var\/log\/redis\/redis-server.log/g' /etc/redis/redis.conf && \
+  sed -i 's/^\(logfile .*\)$/logfile \/var\/log\/redis\/redis-server.log/g' /etc/redis/redis.conf 
   
 VOLUME ["/data"]
 WORKDIR /data
