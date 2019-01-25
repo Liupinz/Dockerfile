@@ -16,7 +16,8 @@ RUN \
   make install && \
   mkdir /etc/redis && \
   mkdir /data && \
-  
+  mkdir /var/lib/redis && \
+  mkdir /var/log/redis && \
   cp /usr/local/redis/redis.conf  /etc/redis/redis.conf && \
   rm -rf /tmp/redis-* && \
   sed -i "s/^\(bind .*\)$/bind $addr/g" /etc/redis/redis.conf && \
