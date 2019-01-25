@@ -3,10 +3,11 @@
 # Based on Ubuntu
 ############################################################
 
-FROM ubuntu
+FROM centos
 ENV addr 172.16.53.10
 RUN \
   cd /tmp && \
+  yum install -y wget gcc gcc-c++ && \
   wget http://download.redis.io/releases/redis-3.2.8.tar.gz && \
   tar -zxvf redis-3.2.8.tar.gz && \
   mv ./redis-3.2.8 /usr/local/redis/ && \
