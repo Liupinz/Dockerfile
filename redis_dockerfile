@@ -1,0 +1,28 @@
+############################################################
+# Dockerfile to build Redis container images
+# Based on Ubuntu
+############################################################
+
+FROM ubuntu
+ENV addr 172.16.53.10
+RUN \
+  cd /tmp && \
+  wget http://download.redis.io/releases/redis-3.2.8.tar.gz && \
+  tar -zxvf redis-3.2.8.tar.gz && \
+  mv ./redis-3.2.8 /usr/local/redis/ && \
+  cd /usr/local/redis/ && \
+  make && \
+  make install && \
+  mkdir /etc/redis && \
+  mkdir /data && \
+  cp /usr/local/redis/redis.conf  /etc/redis/redis.conf && \
+  rm -rf /tmp/redis-* && \
+  sed -i "s/^\(bind .*\)$/bind $addr/g" /etc/redis/redis.conf && \
+  sed -i 's/daemonize no/daemonize yes/g' /etc/redis/redis.conf && \
+  sed -i 's/^\(dir .*\)$/dir \/var\/lib\/redis/g' /etc/redis/redis.conf && \
+  sed -i 's/^\(logfile .*\)$/logfile \/var\/log\/redis\/redis-server.log/g' /etc/redis/redis.conf && \
+  
+VOLUME ["/data"]
+WORKDIR /data
+CMD ["redis-server", "/etc/redis/redis.conf"]
+EXPOSE 6379
